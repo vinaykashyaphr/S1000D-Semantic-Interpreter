@@ -1,12 +1,14 @@
 # include <iostream>
+#include <string_view>
 
 # include "navigators/tree_traversor.hpp"
 # include "navigators/node_builder.hpp"
 
 
-Traversor::Traversor(pugi::xml_node node, ModelsRegistry& registry): 
+Traversor::Traversor(pugi::xml_node node, ModelsRegistry& registry, const std::string_view scheme): 
     _node(node),
-    _registry(registry)
+    _registry(registry),
+    _scheme(scheme)
 {
     traverse();
 }
@@ -17,7 +19,7 @@ struct Traversor::Visitor : public pugi::xml_tree_walker {
 
     NodeBuilder builder;
 
-    Visitor(ModelsRegistry& r) : builder(r) {}
+    Visitor(ModelsRegistry& r, const std::string_view s) : builder(r, s) {}
 
     bool for_each(pugi::xml_node& node) {
 
@@ -37,11 +39,14 @@ struct Traversor::Visitor : public pugi::xml_tree_walker {
 
 void Traversor::traverse() {
 
-    // traverse root node explicitly
     std::cout << _node.name() << std::endl;
 
-    Visitor visitor(_registry);
+    Visitor visitor(_registry, _scheme);
+
+    // traversing root node explicitly
     visitor.builder.build(_node);
+
+    // traversing descendents of root
     _node.traverse(visitor);
 
 }

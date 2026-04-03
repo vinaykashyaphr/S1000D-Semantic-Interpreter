@@ -1,28 +1,113 @@
 # include "builders/dmodule.hpp"
+# include "utils/generic.hpp"
 
-
+# include <iostream>
 
 _Dmodule::_Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme): 
     _node(node),
-    _registry(registry)
+    _registry(registry),
+    _scheme(scheme)
 
 {
 
-    
+    current_model = _registry.register_model(std::make_unique<Dmodule>());
+    build();
+
 }
+
+
+
+enum class _Dmodule::Attrib {
+
+    xmlns,
+    xmlns_dc,
+    xmlns_rdf,
+    xmlns_xlink,
+    xmlns_xsi,
+    xsi_nil,
+    xsi_noNamespaceSchemaLocation,
+    xsi_schemaLocation,
+    id
+
+};
+
+
+
+const std::unordered_map<std::string_view, _Dmodule::Attrib> _Dmodule::ATTRIBS {
+
+    {"xmlns", Attrib::xmlns},
+    {"xmlns:dc", Attrib::xmlns_dc},
+    {"xmlns:rdf", Attrib::xmlns_rdf},
+    {"xmlns:xlink", Attrib::xmlns_xlink},
+    {"xmlns:xsi", Attrib::xmlns_xsi},
+    {"xsi:nil", Attrib::xsi_nil},
+    {"xsi:noNamespaceSchemaLocation", Attrib::xsi_noNamespaceSchemaLocation},
+    {"xsi:schemaLocation", Attrib::xsi_schemaLocation},
+    {"id", Attrib::id}
+
+};
 
 
 
 void _Dmodule::build() {
 
+    std::cout << _scheme << std::endl;
+
     Dmodule* dm = _registry.register_model(std::make_unique<Dmodule>());
 
-    const auto& id = _node.attribute("id");
-
-    if (!id.empty()) dm->id.emplace(id.value());
-
     dm->type = _node.name();
+    resolve_attribs();
 
 }
+
+
+
+void _Dmodule::resolve_attribs() {
+
+    for (const auto& attrib : _node.attributes()) {
+
+        const Attrib _attrib = generic_utils::find_in_umap(ATTRIBS, attrib.name(), "Dmodule");
+
+        switch (_attrib) {
+
+            case Attrib::id:
+                current_model->id.emplace(attrib.value());
+                break;
+
+            case Attrib::xmlns:
+                [[fallthrough]];
+
+            case Attrib::xmlns_dc:
+                [[fallthrough]];
+
+            case Attrib::xmlns_rdf:
+                [[fallthrough]];
+
+            case Attrib::xmlns_xlink:
+                [[fallthrough]];
+
+            case Attrib::xmlns_xsi:
+                [[fallthrough]];
+
+            case Attrib::xsi_nil:
+                [[fallthrough]];
+
+            case Attrib::xsi_noNamespaceSchemaLocation:
+                [[fallthrough]];
+
+            case Attrib::xsi_schemaLocation:
+                break;
+
+            default:
+                throw std::runtime_error("Invalid attribute: " + std::string(attrib.name()) + " for " + std::string(_node.name()));
+                break;
+
+        }
+
+    }
+
+}
+
+
 
 

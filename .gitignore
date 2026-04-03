@@ -2,3 +2,4 @@
 .build
 in.xml
 build
+.clang-tidy

@@ -5,8 +5,9 @@
 
 
 
-NodeBuilder::NodeBuilder(ModelsRegistry& registry): 
-    _registry(registry)
+NodeBuilder::NodeBuilder(ModelsRegistry& registry, const std::string_view scheme): 
+    _registry(registry),
+    _scheme(scheme)
 {}
 
 
@@ -16,7 +17,7 @@ void NodeBuilder::build(const pugi::xml_node& node) {
     auto it = BUILDERS.find(node.name());
 
     if (it != BUILDERS.end())
-        it->second(node, _registry);
+        it->second(node, _registry, _scheme);
     else
         std::cout << node.name() << " is not implemented!" << '\n';
 

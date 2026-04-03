@@ -128,7 +128,7 @@ void NodeStreamer::stream() {
         case Schema::descript: {
 
             if (_node.name() != root_name) unsuppored_xml();
-            Traversor traversor(_node, _registry);
+            Traversor traversor(_node, _registry, schema_name);
             break;
         }
 

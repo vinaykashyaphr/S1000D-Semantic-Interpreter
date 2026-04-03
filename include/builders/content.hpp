@@ -2,15 +2,14 @@
 
 # include <string_view>
 # include <unordered_map>
+
 # include <pugixml.hpp>
 
-# include "models.hpp"
 # include "registries/models_registry.hpp"
 
 
 
-
-class _Dmodule {
+class _Content {
 
     const pugi::xml_node& _node;
     const std::string_view _scheme;
@@ -25,7 +24,7 @@ class _Dmodule {
     void resolve_attribs();
 
     public:
-        _Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);
+        _Content(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);
 
 };
 

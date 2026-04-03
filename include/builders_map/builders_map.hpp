@@ -12,7 +12,7 @@
 
 extern std::unordered_map<
     std::string_view, 
-    std::function<void(const pugi::xml_node&, ModelsRegistry&)>
+    std::function<void(const pugi::xml_node&, ModelsRegistry&, const std::string_view)>
 > BUILDERS;
 
 
