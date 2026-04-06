@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
     Dmodule& dmodule = interpreter._registry.get_item<Dmodule>(0);
 
     std::cout << (dmodule.id.has_value() ? dmodule.id.value() : "none") << " " << dmodule.type << '\n';
+    std::cout << (dmodule.children.content->id.has_value() ? dmodule.children.content->id.value() : "none") << " " << dmodule.children.content->type << '\n';
 
     return 0;
 

@@ -13,18 +13,16 @@ std::unordered_map<
     {"dmodule", [](const pugi::xml_node& n, ModelsRegistry& r, const std::string_view s) -> void 
 
         { 
-            _Dmodule(n, r, s); 
+            _Dmodule(n, r, s);
         }
 
     },
 
-    // {"content", [](const pugi::xml_node& n, ModelsRegistry& r, const std::string_view s)-> void 
-    //     { 
-    //         _Content(n, r, s); 
-    //     }
-    // },
-
-
+    {"content", [](const pugi::xml_node& n, ModelsRegistry& r, const std::string_view s)-> void 
+        { 
+            _Content(n, r, s); 
+        }
+    },
 
 };
 

@@ -5,6 +5,7 @@
 
 # include <pugixml.hpp>
 
+# include "models.hpp"
 # include "registries/models_registry.hpp"
 
 
@@ -15,13 +16,14 @@ class _Content {
     const std::string_view _scheme;
 
     ModelsRegistry& _registry;
-    Dmodule* current_model;
+    Content* current_model;
 
     enum class Attrib;
     static const std::unordered_map<std::string_view, Attrib> ATTRIBS;
 
     void build();
     void resolve_attribs();
+    void link_to_dmodule();
 
     public:
         _Content(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);

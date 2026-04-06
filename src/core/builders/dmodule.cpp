@@ -1,7 +1,7 @@
 # include "builders/dmodule.hpp"
 # include "utils/generic.hpp"
 
-# include <iostream>
+
 
 _Dmodule::_Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme): 
     _node(node),
@@ -10,7 +10,7 @@ _Dmodule::_Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const s
 
 {
 
-    current_model = _registry.register_model(std::make_unique<Dmodule>());
+    current_model = _registry.register_model(std::make_unique<Dmodule>(), _node);
     build();
 
 }
@@ -50,14 +50,8 @@ const std::unordered_map<std::string_view, _Dmodule::Attrib> _Dmodule::ATTRIBS {
 
 
 void _Dmodule::build() {
-
-    std::cout << _scheme << std::endl;
-
-    Dmodule* dm = _registry.register_model(std::make_unique<Dmodule>());
-
-    dm->type = _node.name();
+    current_model->type = _node.name();
     resolve_attribs();
-
 }
 
 

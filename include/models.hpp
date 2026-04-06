@@ -40,9 +40,9 @@ struct Dmodule : BaseModel {
     std::optional<std::string> id;
 
     struct DmoduleChildren {
-        std::optional<RDF_Description> rdf_description;
-        IdentAndStatusSection ident_and_status_section;
-        Content content;  
+        std::optional<RDF_Description>* rdf_description = nullptr;
+        IdentAndStatusSection* ident_and_status_section = nullptr;
+        Content* content = nullptr;  
     };
 
     DmoduleChildren children;
