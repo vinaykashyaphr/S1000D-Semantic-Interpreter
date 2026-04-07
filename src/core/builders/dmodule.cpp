@@ -51,12 +51,12 @@ const std::unordered_map<std::string_view, _Dmodule::Attrib> _Dmodule::ATTRIBS {
 
 void _Dmodule::build() {
     current_model->type = _node.name();
-    resolve_attribs();
+    resolve();
 }
 
 
 
-void _Dmodule::resolve_attribs() {
+void _Dmodule::resolve() {
 
     for (const auto& attrib : _node.attributes()) {
 

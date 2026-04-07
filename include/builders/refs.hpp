@@ -10,13 +10,13 @@
 
 
 
-class _Content {
+class _Refs {
 
     const pugi::xml_node& _node;
     const std::string_view _scheme;
 
     ModelsRegistry& _registry;
-    Content* current_model;
+    Refs* current_model;
 
     enum class Attrib;
     static const std::unordered_map<std::string_view, Attrib> ATTRIBS;
@@ -26,8 +26,6 @@ class _Content {
     void link();
 
     public:
-        _Content(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);
+        _Refs(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);
 
 };
-
-

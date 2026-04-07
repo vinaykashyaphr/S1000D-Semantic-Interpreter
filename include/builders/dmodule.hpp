@@ -22,7 +22,7 @@ class _Dmodule {
     static const std::unordered_map<std::string_view, Attrib> ATTRIBS;
 
     void build();
-    void resolve_attribs();
+    void resolve();
 
     public:
         _Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);

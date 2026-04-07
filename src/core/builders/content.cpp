@@ -12,7 +12,6 @@ _Content::_Content(const pugi::xml_node& node, ModelsRegistry& registry, const s
     std::cout << "content constructor" << '\n';
     current_model = _registry.register_model(std::make_unique<Content>(), _node);
     build();
-    link_to_dmodule();
 }
 
 
@@ -35,12 +34,13 @@ const std::unordered_map<std::string_view, _Content::Attrib> _Content::ATTRIBS {
 
 void _Content::build() {
     current_model->type = _node.name();
-    resolve_attribs();
+    resolve();
+    link();
 }
 
 
 
-void _Content::resolve_attribs() {
+void _Content::resolve() {
 
     for (const auto& attrib : _node.attributes()) {
 
@@ -63,7 +63,7 @@ void _Content::resolve_attribs() {
 
 
 
-void _Content::link_to_dmodule() {
+void _Content::link() {
 
     pugi::xml_node parent_node = _node.parent();
     BaseModel* parent = _registry.get_by_node(parent_node);
