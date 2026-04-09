@@ -12,7 +12,7 @@ add_library(
 
 target_include_directories(
     semantic_interpreter_core
-    PUBLIC ${INCLUDE_DIR}
+    PRIVATE ${INCLUDE_DIR}
     PUBLIC ${LIB_INTERFACE}
     PUBLIC ${DEPS_DIR}/pugixml/src
     PUBLIC ${DEPS_DIR}/nlohmann

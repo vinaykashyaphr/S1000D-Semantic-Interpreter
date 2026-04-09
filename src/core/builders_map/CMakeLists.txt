@@ -8,10 +8,10 @@ add_library(
 
 target_include_directories(
     builders_map
-    PUBLIC ${INCLUDE_DIR}
+    PRIVATE ${INCLUDE_DIR}
     PUBLIC ${LIB_INTERFACE}
-    PUBLIC ${DEPS_DIR}/pugixml/src
-    PUBLIC ${DEPS_DIR}/nlohmann
+    PRIVATE ${DEPS_DIR}/pugixml/src
+    PRIVATE ${DEPS_DIR}/nlohmann
 )
 
 

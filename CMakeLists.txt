@@ -42,7 +42,7 @@ add_executable(
 
 target_include_directories(
     semantic_interpreter
-    PUBLIC ${INCLUDE_DIR}
+    PRIVATE ${INCLUDE_DIR}
     PUBLIC ${LIB_INTERFACE}
 )
 

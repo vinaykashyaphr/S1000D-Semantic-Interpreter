@@ -24,7 +24,7 @@ Content* content, Refs* refs, etc. are raw pointers into the registry. There's n
 if (!children.to_json().empty()) j["children"] = children.to_json();
 You've already fixed this in the latest version with auto children_json = ..., but the older pattern is still present in some places.
 
-5. Three separate include directories (include/, interface/, src/)
+5. Two separate include directories (include/, interface/)
 interface/ and include/ serve overlapping purposes. Typically one directory holds public headers. The split between interface/definitions/models.hpp and include/builders/ is inconsistent — a consumer of this library doesn't need builder headers but does need models.
 
 6. No tests

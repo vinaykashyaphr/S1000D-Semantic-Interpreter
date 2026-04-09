@@ -10,9 +10,9 @@ add_library(
 target_include_directories(
     navigators
     PUBLIC ${LIB_INTERFACE}
-    PUBLIC ${INCLUDE_DIR}
-    PUBLIC ${DEPS_DIR}/pugixml/src
-    PUBLIC ${DEPS_DIR}/nlohmann
+    PRIVATE ${INCLUDE_DIR}
+    PRIVATE ${DEPS_DIR}/pugixml/src
+    PRIVATE ${DEPS_DIR}/nlohmann
 )
 
 
