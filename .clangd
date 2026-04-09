@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - -I/home/vinaykashyap/projects/S1000D/v5/include
+    - -I/home/vinaykashyap/projects/S1000D/v5/interface
+    - -I/home/vinaykashyap/projects/S1000D/v5/deps/pugixml/src
+    - -I/home/vinaykashyap/projects/S1000D/v5/deps/nlohmann
+    - -std=c++23

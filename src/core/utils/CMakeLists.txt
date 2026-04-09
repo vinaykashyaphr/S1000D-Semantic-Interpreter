@@ -16,6 +16,7 @@ target_include_directories(
     utils
     PUBLIC ${INCLUDE_DIR}
     PUBLIC ${DEPS_DIR}/pugixml/src
+    PUBLIC ${DEPS_DIR}/nlohmann
 )
 
 

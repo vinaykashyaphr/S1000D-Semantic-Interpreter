@@ -19,6 +19,6 @@ target_include_directories(
     PUBLIC ${LIB_INTERFACE}
     PUBLIC ${INCLUDE_DIR}
     PUBLIC ${DEPS_DIR}/pugixml/src
-    PUBLIC ${DEPS_DIR}/nlohmann 
+    PUBLIC ${DEPS_DIR}/nlohmann
 )
 

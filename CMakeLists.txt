@@ -42,15 +42,13 @@ add_executable(
 
 target_include_directories(
     semantic_interpreter
-    PUBLIC
-    ${INCLUDE_DIR}
-    ${LIB_INTERFACE}
+    PUBLIC ${INCLUDE_DIR}
+    PUBLIC ${LIB_INTERFACE}
 )
 
 
 target_link_libraries(
     semantic_interpreter
-    PRIVATE
-    semantic_interpreter_core
+    PRIVATE semantic_interpreter_core
 )
 

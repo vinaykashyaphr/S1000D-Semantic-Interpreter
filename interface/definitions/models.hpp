@@ -4,11 +4,25 @@
 # include <optional>
 // # include <vector>
 
+# include <json.hpp>
+
 
 
 struct BaseModel {
 
     virtual ~BaseModel() = default;
+
+    virtual nlohmann::json to_json() const {
+
+        return {{"type", type}};
+
+    };
+
+    nlohmann::json get_json() const { 
+
+        return to_json(); 
+
+    }
 
     std::string type;
 
