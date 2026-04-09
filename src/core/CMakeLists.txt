@@ -29,9 +29,11 @@ target_link_libraries(
     semantic_interpreter_core
     PRIVATE
     pugixml-static
-    builders
+    $<LINK_LIBRARY:WHOLE_ARCHIVE,builders>
     navigators
     utils
     builders_map
 )
+
+
 

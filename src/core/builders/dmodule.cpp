@@ -1,6 +1,7 @@
 # include <utility>
 
 # include "builders/dmodule.hpp"
+# include "builders_map/builders_map.hpp"
 # include "utils/generic.hpp"
 
 
@@ -135,4 +136,15 @@ nlohmann::json Dmodule::to_json() const {
 
 }
 
+
+
+static BuilderRegistrar _reg(
+    "dmodule", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+
+        {
+            _Dmodule(n, r, s);
+        }
+
+);
 

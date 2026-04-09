@@ -1,6 +1,7 @@
 # include <memory>
 
 # include "builders/content.hpp"
+# include "builders_map/builders_map.hpp"
 #include "definitions/models.hpp"
 # include "utils/generic.hpp"
 
@@ -103,5 +104,15 @@ nlohmann::json Content::to_json() const {
     return j;
 
 }
+
+
+
+static BuilderRegistrar _reg(
+    "content", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+    {
+        _Content(n, r, s);
+    }
+);
 
 

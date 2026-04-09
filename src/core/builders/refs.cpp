@@ -1,4 +1,5 @@
 # include "builders/refs.hpp"
+# include "builders_map/builders_map.hpp"
 # include "definitions/models.hpp"
 
 # include <memory>
@@ -66,6 +67,16 @@ nlohmann::json Refs::to_json() const {
     return j;
 
 }
+
+
+
+static BuilderRegistrar _reg(
+    "refs", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+        {
+            _Refs(n, r, s);
+        }
+);
 
 
 

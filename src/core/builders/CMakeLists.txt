@@ -1,16 +1,13 @@
-add_library(
-    builders
-    ./dmodule.cpp
-    ./content.cpp
-    ./refs.cpp
-)
+file(GLOB_RECURSE BUILDER_SOURCES "*.cpp")
+
+
+add_library(builders ${BUILDER_SOURCES})
 
 
 
 target_link_libraries(
     builders
-    PRIVATE
-    pugixml-static
+    PRIVATE pugixml-static
 )
 
 
