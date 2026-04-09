@@ -1,8 +1,8 @@
 # include <memory>
+# include <string>
 
 # include "builders/content.hpp"
 # include "builders_map/builders_map.hpp"
-#include "definitions/models.hpp"
 # include "utils/generic.hpp"
 
 
@@ -67,11 +67,17 @@ void _Content::resolve() {
 
 void _Content::link() {
 
-    Dmodule* parent = _registry.get_model<Dmodule>(_node.parent());
+    _registry.defer_link(
 
-    if (auto* dmodule = dynamic_cast<Dmodule*>(parent)) {
-        dmodule->children.content = current_model;
-    }
+        [model = current_model, node = _node, &reg = _registry]() {
+
+            Dmodule* parent = reg.get_model<Dmodule>(node.parent());
+            if (!parent) throw std::runtime_error(std::string(node.name()) + ": expected parent \"dmodule\" not found");
+            parent->children.content = model;
+
+        }
+
+    );
 
 }
 

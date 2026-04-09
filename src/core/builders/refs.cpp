@@ -1,8 +1,10 @@
+# include <memory>
+# include <string>
+
 # include "builders/refs.hpp"
 # include "builders_map/builders_map.hpp"
 # include "definitions/models.hpp"
 
-# include <memory>
 
 
 _Refs::_Refs(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme):
@@ -27,11 +29,17 @@ void _Refs::build() {
 
 void _Refs::link() {
 
-    Content* parent = _registry.get_model<Content>(_node.parent());
+    _registry.defer_link(
 
-    if (auto* content = dynamic_cast<Content*>(parent)){
-        content->children.refs = current_model;
-    }
+        [model = current_model, node = _node, &reg = _registry]() {
+
+            Content* parent = reg.get_model<Content>(node.parent());
+            if (!parent) throw std::runtime_error(std::string(node.name()) + ": expected parent \"content\" not found");
+            parent->children.refs = model;
+
+        }
+
+    );
 
 }
 
@@ -77,6 +85,5 @@ static BuilderRegistrar _reg(
             _Refs(n, r, s);
         }
 );
-
 
 

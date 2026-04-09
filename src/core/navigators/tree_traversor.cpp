@@ -49,4 +49,7 @@ void Traversor::traverse() {
     // traversing descendents of root
     _node.traverse(visitor);
 
+    // linking model to relations after models built
+    _registry.resolve_links();
+
 }

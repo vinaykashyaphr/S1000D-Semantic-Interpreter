@@ -1,5 +1,6 @@
 # pragma once
 
+# include <functional>
 # include <memory>
 # include <vector>
 # include <unordered_map>
@@ -51,9 +52,21 @@ class ModelsRegistry {
         }
 
 
+        void defer_link(std::function<void()> fn) {
+            _pending_links.push_back(std::move(fn));
+        }
+
+
+        void resolve_links() {
+            for (auto& fn : _pending_links) fn();
+            _pending_links.clear();
+        }
+
+
     private:
         std::vector<std::unique_ptr<BaseModel>> models;
         std::unordered_map<void*, BaseModel*> node_map;
+        std::vector<std::function<void()>> _pending_links;
 
 };
 
