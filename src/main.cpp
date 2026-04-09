@@ -26,6 +26,8 @@ int main(int argc, char* argv[]) {
     if (!dmodule) return 1;
 
     std::cout << (dmodule->id.has_value() ? dmodule->id.value() : "none") << " " << dmodule->type << '\n';
+
+    std::cout << dmodule->to_json().dump(4) << '\n';
     // std::cout << (dmodule.children.content->id.has_value() ? dmodule.children.content->id.value() : "none") << " " << dmodule.children.content->type << '\n';
 
     return 0;

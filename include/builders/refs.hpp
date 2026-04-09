@@ -1,7 +1,6 @@
 # pragma once
 
 # include <string_view>
-# include <unordered_map>
 
 # include <pugixml.hpp>
 
@@ -18,11 +17,7 @@ class _Refs {
     ModelsRegistry& _registry;
     Refs* current_model;
 
-    enum class Attrib;
-    static const std::unordered_map<std::string_view, Attrib> ATTRIBS;
-
     void build();
-    void resolve();
     void link();
 
     public:

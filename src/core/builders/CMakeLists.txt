@@ -2,6 +2,7 @@ add_library(
     builders
     ./dmodule.cpp
     ./content.cpp
+    ./refs.cpp
 )
 
 

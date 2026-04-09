@@ -1,4 +1,7 @@
+# include <memory>
+
 # include "builders/content.hpp"
+#include "definitions/models.hpp"
 # include "utils/generic.hpp"
 
 
@@ -63,12 +66,42 @@ void _Content::resolve() {
 
 void _Content::link() {
 
-    pugi::xml_node parent_node = _node.parent();
-    Dmodule* parent = _registry.get_model<Dmodule>(parent_node);
+    Dmodule* parent = _registry.get_model<Dmodule>(_node.parent());
 
     if (auto* dmodule = dynamic_cast<Dmodule*>(parent)) {
         dmodule->children.content = current_model;
     }
 
 }
+
+
+
+nlohmann::json Content::ContentChildren::to_json() const {
+
+    nlohmann::json j = nlohmann::json::array();
+
+    if (refs) j.push_back(refs->to_json());
+    // j.push_back(ident_and_status_section->to_json());
+    // j.push_back(content->to_json());
+    return j;
+
+};
+
+
+
+nlohmann::json Content::to_json() const {
+
+    nlohmann::json j = {{"type", type}};
+
+    /// @b attributes
+    j["id"] = id.has_value() ? nlohmann::json(id.value()) : nlohmann::json(nullptr);
+
+    /// @b children
+    if (auto children_json = children.to_json(); !children_json.empty())
+        j["children"] = std::move(children_json);
+
+    return j;
+
+}
+
 

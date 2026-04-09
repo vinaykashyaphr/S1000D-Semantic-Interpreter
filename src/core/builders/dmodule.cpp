@@ -1,3 +1,5 @@
+# include <utility>
+
 # include "builders/dmodule.hpp"
 # include "utils/generic.hpp"
 
@@ -103,20 +105,34 @@ void _Dmodule::resolve() {
 }
 
 
-void to_json(nlohmann::json& j, const Dmodule& obj) {
 
-    j = nlohmann::json {
-    
-        {"type", obj.type}
+nlohmann::json Dmodule::DmoduleChildren::to_json() const {
 
-    };
-}
+    nlohmann::json j = nlohmann::json::array();
 
+    if (rdf__description) j.push_back(rdf__description->to_json());
+    if (ident_and_status_section) j.push_back(ident_and_status_section->to_json());
+    if (content) j.push_back(content->to_json());
 
-nlohmann::json _Dmodule::as_json() {
-
-    if (!current_model) return nlohmann::json{};
-    return *current_model;
+    return j;
 
 }
+
+
+
+nlohmann::json Dmodule::to_json() const {
+
+    nlohmann::json j = {{"type", type}};
+
+    /// @b attributes
+    j["id"] = id.has_value() ? nlohmann::json(id.value()) : nlohmann::json(nullptr);
+
+    /// @b children
+    if (auto children_json = children.to_json(); !children_json.empty())
+        j["children"] = std::move(children_json);
+
+    return j;
+
+}
+
 

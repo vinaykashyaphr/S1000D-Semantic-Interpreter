@@ -3,6 +3,7 @@
 # include "builders_map/builders_map.hpp"
 
 # include "builders/__elements__.hpp"
+#include "builders/refs.hpp"
 
 
 
@@ -19,9 +20,19 @@ std::unordered_map<
     },
 
     {"content", [](const pugi::xml_node& n, ModelsRegistry& r, const std::string_view s)-> void 
+
         { 
             _Content(n, r, s); 
         }
+
+    },
+
+    {"refs", [](const pugi::xml_node& n, ModelsRegistry& r, const std::string_view s)-> void 
+
+        { 
+            _Refs(n, r, s); 
+        }
+
     },
 
 };

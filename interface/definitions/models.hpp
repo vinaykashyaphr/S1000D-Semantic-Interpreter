@@ -2,7 +2,7 @@
 
 # include <string>
 # include <optional>
-// # include <vector>
+# include <vector>
 
 # include <json.hpp>
 
@@ -32,54 +32,116 @@ struct BaseModel {
 
 struct RDF_Description : BaseModel {
 
+    nlohmann::json to_json() const override;
+
 };
 
 
 
 struct IdentAndStatusSection : BaseModel {
 
+    nlohmann::json to_json() const override;
 
 };
 
 
 
-struct Refs {
-
-    std::string type;
-
-    // struct RefsChild {
-
-    //     std::optional<DmRef> dm_ref;
-    //     std::optional<PmRef> pm_ref;
-    //     std::optional<ExternalPubRef> external_pub_ref;
-
-    // };
-
-    // std::vector<RefsChild> children;
+struct DmRef : BaseModel {
 
 };
 
+
+
+struct PmRef : BaseModel {
+
+};
+
+
+
+struct ExternalPubRef : BaseModel {
+
+};
+
+
+
+struct Refs : BaseModel {
+
+    struct RefsChildren : BaseModel {
+
+        /// @p dmRef opt
+        std::optional<DmRef> dm_ref;
+
+        /// @p pmRef opt
+        std::optional<PmRef> pm_ref;
+
+        /// @p externalPubRef opt
+        std::optional<ExternalPubRef> external_pub_ref;
+
+        nlohmann::json to_json() const override;
+
+    };
+
+    /// @brief occurance: multiple
+    std::vector<RefsChildren> children;
+
+    nlohmann::json to_json() const override;
+
+};
 
 
 
 struct Content : BaseModel {
 
+    ///@a id opt
     std::optional<std::string> id;
+
+    struct ContentChildren : BaseModel {
+
+        /// @p refs opt
+        Refs* refs = nullptr;
+
+        /// @p referencedApplicGroup opt
+        /// @p referencedApplicGroupRef opt
+        /// @p warningsAndCautions opt
+        /// @p warningsAndCautionsRef opt
+        /// @p description req
+
+        nlohmann::json to_json() const override;
+
+    };
+
+    /// @brief occurance: single 
+    ContentChildren children;
+
+    nlohmann::json to_json() const override;
+
 };
 
 
 
 struct Dmodule : BaseModel {
 
+    /// @a id opt
     std::optional<std::string> id;
 
-    struct DmoduleChildren {
-        std::optional<RDF_Description>* rdf__description = nullptr;
+    struct DmoduleChildren : BaseModel {
+
+        /// @p rdf::Description opt
+        RDF_Description* rdf__description = nullptr;
+
+        /// @p identAndStatusSection req
         IdentAndStatusSection* ident_and_status_section = nullptr;
+
+        /// @p content req
         Content* content = nullptr;  
+
+        nlohmann::json to_json() const override;
     };
 
+    /// @brief occurance: single
     DmoduleChildren children;
+
+    nlohmann::json to_json() const override;
 
 };
 
