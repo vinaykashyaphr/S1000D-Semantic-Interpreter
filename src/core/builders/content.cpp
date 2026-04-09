@@ -87,7 +87,7 @@ nlohmann::json Content::ContentChildren::to_json() const {
 
     nlohmann::json j = nlohmann::json::array();
 
-    if (refs) j.push_back(refs->to_json());
+    if (refs) j.push_back((*refs)->to_json());
     // j.push_back(ident_and_status_section->to_json());
     // j.push_back(content->to_json());
     return j;

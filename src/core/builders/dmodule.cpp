@@ -111,7 +111,7 @@ nlohmann::json Dmodule::DmoduleChildren::to_json() const {
 
     nlohmann::json j = nlohmann::json::array();
 
-    if (rdf__description) j.push_back(rdf__description->to_json());
+    if (rdf__description) j.push_back((*rdf__description)->to_json());
     if (ident_and_status_section) j.push_back(ident_and_status_section->to_json());
     if (content) j.push_back(content->to_json());
 

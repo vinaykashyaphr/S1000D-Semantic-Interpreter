@@ -98,7 +98,7 @@ struct Content : BaseModel {
     struct ContentChildren {
 
         /// @p refs opt
-        Refs* refs = nullptr;
+        std::optional<Refs*> refs;
 
         /// @p referencedApplicGroup opt
         /// @p referencedApplicGroupRef opt
@@ -127,7 +127,7 @@ struct Dmodule : BaseModel {
     struct DmoduleChildren {
 
         /// @p rdf::Description opt
-        RDF_Description* rdf__description = nullptr;
+        std::optional<RDF_Description*> rdf__description;
 
         /// @p identAndStatusSection req
         IdentAndStatusSection* ident_and_status_section = nullptr;
