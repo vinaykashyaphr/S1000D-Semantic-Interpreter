@@ -3,7 +3,6 @@
 # include "navigators/node_streamer.hpp"
 
 
-
 Interpreter::Interpreter(std::istream& xml_stream) {
 
     std::istreambuf_iterator<char> begin(xml_stream);
@@ -79,5 +78,8 @@ void Interpreter::interpret() {
     streamer.stream();
 
 }
+
+
+
 
 

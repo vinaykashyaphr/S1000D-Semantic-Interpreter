@@ -6,12 +6,13 @@
 
 # include <pugixml.hpp>
 
-# include "models.hpp"
+# include "definitions/models.hpp"
 
 
 class ModelsRegistry {
 
     public:
+
         template<typename Model>
         Model* register_model(std::unique_ptr<Model> model_ptr, const pugi::xml_node& node) {
             Model* raw = model_ptr.get();
@@ -21,16 +22,34 @@ class ModelsRegistry {
         }
 
         template<typename Model>
-        Model& get_item(std::size_t index)
-        {
-            return dynamic_cast<Model&>(*models.at(index));
+        Model* get_model(const std::string_view xpath, const pugi::xml_node& root) {
+
+            try {
+
+                pugi::xpath_node xnode = root.select_node(xpath.data());
+
+                if (!xnode) return nullptr;
+                auto it = node_map.find(xnode.node().internal_object());
+
+                if (it != node_map.end()) return dynamic_cast<Model*>(it->second);
+                return nullptr;
+            }
+
+            catch (const pugi::xpath_exception& e) {
+                return nullptr;
+            }
+
         }
 
-        BaseModel* get_by_node(const pugi::xml_node& node) {
+        template<typename Model>
+        Model* get_model(const pugi::xml_node& node) {
+
             auto it = node_map.find(node.internal_object());
-            if (it != node_map.end()) return it->second;
+            if (it != node_map.end()) return dynamic_cast<Model*>(it->second);
             return nullptr;
+
         }
+
 
     private:
         std::vector<std::unique_ptr<BaseModel>> models;

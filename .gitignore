@@ -3,3 +3,4 @@
 in.xml
 build
 .clang-tidy
+.clangd

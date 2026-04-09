@@ -103,5 +103,20 @@ void _Dmodule::resolve() {
 }
 
 
+void to_json(nlohmann::json& j, const Dmodule& obj) {
 
+    j = nlohmann::json {
+    
+        {"type", obj.type}
+
+    };
+}
+
+
+nlohmann::json _Dmodule::as_json() {
+
+    if (!current_model) return nlohmann::json{};
+    return *current_model;
+
+}
 

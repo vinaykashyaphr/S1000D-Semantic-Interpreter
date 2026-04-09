@@ -1,7 +1,5 @@
 # include "builders/content.hpp"
-#include "models.hpp"
 # include "utils/generic.hpp"
-#include <iostream>
 
 
 _Content::_Content(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme):
@@ -9,7 +7,6 @@ _Content::_Content(const pugi::xml_node& node, ModelsRegistry& registry, const s
     _registry(registry),
     _scheme(scheme)
 {
-    std::cout << "content constructor" << '\n';
     current_model = _registry.register_model(std::make_unique<Content>(), _node);
     build();
 }
@@ -66,7 +63,7 @@ void _Content::resolve() {
 void _Content::link() {
 
     pugi::xml_node parent_node = _node.parent();
-    BaseModel* parent = _registry.get_by_node(parent_node);
+    Dmodule* parent = _registry.get_model<Dmodule>(parent_node);
     
     if (auto* dmodule = dynamic_cast<Dmodule*>(parent)) {
         dmodule->children.content = current_model;

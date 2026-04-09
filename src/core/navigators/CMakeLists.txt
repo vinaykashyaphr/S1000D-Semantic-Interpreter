@@ -9,6 +9,7 @@ add_library(
 
 target_include_directories(
     navigators
+    PUBLIC ${LIB_INTERFACE}
     PUBLIC ${INCLUDE_DIR}
     PUBLIC ${DEPS_DIR}/pugixml/src
 )

@@ -20,8 +20,7 @@ target_include_directories(
 
 target_compile_options(
     semantic_interpreter_core
-    PRIVATE
-    -Wall -Wextra -Wconversion -Werror
+    PRIVATE -Wall -Wextra -Wconversion -Werror
 )
 
 

@@ -3,6 +3,7 @@
 # include <fstream>
 
 # include "interpreter.hpp"
+# include "definitions/models.hpp"
 
 
 namespace fs = std::filesystem;
@@ -20,10 +21,12 @@ int main(int argc, char* argv[]) {
 
     Interpreter interpreter(in_file);
 
-    Dmodule& dmodule = interpreter._registry.get_item<Dmodule>(0);
+    Dmodule* dmodule = interpreter.get_model<Dmodule>(".");
 
-    std::cout << (dmodule.id.has_value() ? dmodule.id.value() : "none") << " " << dmodule.type << '\n';
-    std::cout << (dmodule.children.content->id.has_value() ? dmodule.children.content->id.value() : "none") << " " << dmodule.children.content->type << '\n';
+    if (!dmodule) return 1;
+
+    std::cout << (dmodule->id.has_value() ? dmodule->id.value() : "none") << " " << dmodule->type << '\n';
+    // std::cout << (dmodule.children.content->id.has_value() ? dmodule.children.content->id.value() : "none") << " " << dmodule.children.content->type << '\n';
 
     return 0;
 

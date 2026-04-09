@@ -1,5 +1,6 @@
 # pragma once
 
+# include <string_view>
 # include <unordered_map>
 # include <string>
 # include <iostream>
@@ -13,6 +14,7 @@
 class Interpreter {
 
     pugi::xml_document _doc;
+    ModelsRegistry _registry;
 
     static void replace_all(
         std::string& phrase, 
@@ -27,11 +29,21 @@ class Interpreter {
 
     void parse(std::string xml_content);
     void interpret();
-    pugi::xml_node doc_root() const;
-
+    
     public:
-        ModelsRegistry _registry;
+
         Interpreter(std::istream& stream);
+        pugi::xml_node doc_root() const;
+    
+        template<typename Model>
+        Model* get_model(const std::string_view xpath) {
+            return _registry.get_model<Model>(xpath, doc_root());
+        }
+
+        template<typename Model>
+        Model* get_model(const pugi::xml_node& node) {
+            return _registry.get_model<Model>(node);
+        }
 
 };
 

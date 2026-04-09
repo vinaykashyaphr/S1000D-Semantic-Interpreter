@@ -4,10 +4,10 @@
 # include <unordered_map>
 # include <pugixml.hpp>
 
-# include "models.hpp"
+# include "definitions/models.hpp"
 # include "registries/models_registry.hpp"
 
-
+# include <json.hpp>
 
 
 class _Dmodule {
@@ -23,6 +23,8 @@ class _Dmodule {
 
     void build();
     void resolve();
+
+    nlohmann::json as_json();
 
     public:
         _Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme);
