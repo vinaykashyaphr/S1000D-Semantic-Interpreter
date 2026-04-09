@@ -66,7 +66,7 @@ struct ExternalPubRef : BaseModel {
 
 struct Refs : BaseModel {
 
-    struct RefsChildren : BaseModel {
+    struct RefsChildren {
 
         /// @p dmRef opt
         std::optional<DmRef> dm_ref;
@@ -77,7 +77,7 @@ struct Refs : BaseModel {
         /// @p externalPubRef opt
         std::optional<ExternalPubRef> external_pub_ref;
 
-        nlohmann::json to_json() const override;
+        nlohmann::json to_json() const;
 
     };
 
@@ -95,7 +95,7 @@ struct Content : BaseModel {
     ///@a id opt
     std::optional<std::string> id;
 
-    struct ContentChildren : BaseModel {
+    struct ContentChildren {
 
         /// @p refs opt
         Refs* refs = nullptr;
@@ -106,7 +106,7 @@ struct Content : BaseModel {
         /// @p warningsAndCautionsRef opt
         /// @p description req
 
-        nlohmann::json to_json() const override;
+        nlohmann::json to_json() const;
 
     };
 
@@ -124,7 +124,7 @@ struct Dmodule : BaseModel {
     /// @a id opt
     std::optional<std::string> id;
 
-    struct DmoduleChildren : BaseModel {
+    struct DmoduleChildren {
 
         /// @p rdf::Description opt
         RDF_Description* rdf__description = nullptr;
@@ -135,7 +135,7 @@ struct Dmodule : BaseModel {
         /// @p content req
         Content* content = nullptr;  
 
-        nlohmann::json to_json() const override;
+        nlohmann::json to_json() const;
     };
 
     /// @brief occurance: single
