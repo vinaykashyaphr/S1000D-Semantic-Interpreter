@@ -7,6 +7,17 @@
 
 
 
+
+static BuilderRegistrar _reg(
+    "refs", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+        {
+            _Refs(n, r, s);
+        }
+);
+
+
+
 _Refs::_Refs(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme):
     _node(node),
     _registry(registry),
@@ -75,15 +86,5 @@ nlohmann::json Refs::to_json() const {
     return j;
 
 }
-
-
-
-static BuilderRegistrar _reg(
-    "refs", 
-    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
-        {
-            _Refs(n, r, s);
-        }
-);
 
 

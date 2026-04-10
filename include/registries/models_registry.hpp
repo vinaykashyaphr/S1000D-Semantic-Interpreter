@@ -10,6 +10,8 @@
 # include "definitions/models.hpp"
 
 
+
+
 class ModelsRegistry {
 
     public:
@@ -52,15 +54,8 @@ class ModelsRegistry {
         }
 
 
-        void defer_link(std::function<void()> fn) {
-            _pending_links.push_back(std::move(fn));
-        }
-
-
-        void resolve_links() {
-            for (auto& fn : _pending_links) fn();
-            _pending_links.clear();
-        }
+        void defer_link(std::function<void()> fn);
+        void resolve_links();
 
 
     private:

@@ -6,6 +6,19 @@
 
 
 
+
+static BuilderRegistrar _reg(
+    "dmodule", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+
+        {
+            _Dmodule(n, r, s);
+        }
+
+);
+
+
+
 _Dmodule::_Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme): 
     _node(node),
     _registry(registry),
@@ -136,15 +149,4 @@ nlohmann::json Dmodule::to_json() const {
 
 }
 
-
-
-static BuilderRegistrar _reg(
-    "dmodule", 
-    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
-
-        {
-            _Dmodule(n, r, s);
-        }
-
-);
 

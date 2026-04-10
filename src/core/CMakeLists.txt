@@ -2,6 +2,8 @@ add_subdirectory(builders)
 add_subdirectory(navigators)
 add_subdirectory(utils)
 add_subdirectory(builders_map)
+add_subdirectory(registries)
+
 
 
 add_library(
@@ -33,6 +35,7 @@ target_link_libraries(
     navigators
     utils
     builders_map
+    registries
 )
 
 

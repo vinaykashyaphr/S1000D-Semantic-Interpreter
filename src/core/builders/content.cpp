@@ -7,6 +7,17 @@
 
 
 
+
+static BuilderRegistrar _reg(
+    "content", 
+    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
+    {
+        _Content(n, r, s);
+    }
+);
+
+
+
 _Content::_Content(const pugi::xml_node& node, ModelsRegistry& registry, const std::string_view scheme):
     _node(node),
     _registry(registry),
@@ -110,15 +121,5 @@ nlohmann::json Content::to_json() const {
     return j;
 
 }
-
-
-
-static BuilderRegistrar _reg(
-    "content", 
-    [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
-    {
-        _Content(n, r, s);
-    }
-);
 
 
