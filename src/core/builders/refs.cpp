@@ -1,9 +1,8 @@
-# include <memory>
 # include <string>
 
 # include "builders/refs.hpp"
 # include "builders_map/builders_map.hpp"
-# include "definitions/models.hpp"
+# include "models/defs/content.hpp"
 
 
 
@@ -23,7 +22,7 @@ _Refs::_Refs(const pugi::xml_node& node, ModelsRegistry& registry, const std::st
     _registry(registry),
     _scheme(scheme)
 {
-    current_model = _registry.register_model(std::make_unique<Refs>(), _node);
+    current_model = _registry.register_model(_registry.factory().make<Refs>(), _node);
     build();
 }
 

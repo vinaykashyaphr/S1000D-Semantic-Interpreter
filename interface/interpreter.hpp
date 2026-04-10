@@ -4,8 +4,9 @@
 # include <iostream>
 # include <memory>
 
+# include "models/base.hpp"
+# include "models/factory.hpp"
 
-struct BaseModel;
 
 
 class Interpreter {
@@ -17,7 +18,7 @@ class Interpreter {
 
     public:
 
-        explicit Interpreter(std::istream& stream);
+        explicit Interpreter(std::istream& stream, ModelsFactory* factory = nullptr);
         ~Interpreter();
 
         template<typename Model>

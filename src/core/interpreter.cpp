@@ -10,6 +10,11 @@ struct Interpreter::Impl {
     pugi::xml_document _doc;
     ModelsRegistry _registry;
 
+    Impl(ModelsFactory* factory = nullptr): 
+        _registry(factory) 
+    {}
+
+
 
     static void replace_all(
         std::string& phrase, const std::string& replace_from, const std::string& replace_to
@@ -73,7 +78,10 @@ struct Interpreter::Impl {
 
 
 
-Interpreter::Interpreter(std::istream& xml_stream): _impl(std::make_unique<Impl>()) {
+Interpreter::Interpreter(std::istream& xml_stream, ModelsFactory* factory): 
+    _impl(std::make_unique<Impl>(factory))
+
+{
 
     std::istreambuf_iterator<char> begin(xml_stream);
     std::istreambuf_iterator<char> end;

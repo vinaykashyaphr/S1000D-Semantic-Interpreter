@@ -1,4 +1,4 @@
-file(GLOB_RECURSE BUILDER_SOURCES "*.cpp")
+file(GLOB_RECURSE BUILDER_SOURCES CONFIGURE_DEPENDS "*.cpp")
 
 
 add_library(builders ${BUILDER_SOURCES})

@@ -6,7 +6,7 @@
 
 
 static BuilderRegistrar _reg(
-    "content", 
+    "dmRef", 
     [](const pugi::xml_node& n, ModelsRegistry& r, std::string_view s) 
     {
         _DmRef(n, r, s);
@@ -20,7 +20,7 @@ _DmRef::_DmRef(const pugi::xml_node& node, ModelsRegistry& registry, const std::
     _registry(registry),
     _scheme(scheme)
 {
-    current_model = _registry.register_model(std::make_unique<DmRef>(), _node);
+    current_model = _registry.register_model(_registry.factory().make<DmRef>(), _node);
     build();
 }
 
@@ -56,11 +56,11 @@ enum class _DmRef::Attrib {
     authorityDocument,
 
     // xlink:XLINKATT
-    xlink_type,
-    xlink_href,
-    xlink_title,
-    xlink_show,
-    xlink_actuate,
+    xlink__type,
+    xlink__href,
+    xlink__title,
+    xlink__show,
+    xlink__actuate,
 
 };
 
@@ -78,13 +78,13 @@ const std::unordered_map<std::string_view, _DmRef::Attrib> _DmRef::ATTRIBS {
     {"commercialClassification", Attrib::commercialClassification},
     {"ceveat", Attrib::ceveat},
     {"derivativeClassificationRefId", Attrib::derivativeClassificationRefId},
-    {"authorityName", Attrib::derivativeClassificationRefId},
-    {"authorityDocument", Attrib::derivativeClassificationRefId},
-    {"xlink:type", Attrib::derivativeClassificationRefId},
-    {"xlink:href", Attrib::derivativeClassificationRefId},
-    {"xlink:title", Attrib::derivativeClassificationRefId},
-    {"xlink:show", Attrib::derivativeClassificationRefId},
-    {"xlink:actuate", Attrib::derivativeClassificationRefId}
+    {"authorityName", Attrib::authorityName},
+    {"authorityDocument", Attrib::authorityDocument},
+    {"xlink:type", Attrib::xlink__type},
+    {"xlink:href", Attrib::xlink__href},
+    {"xlink:title", Attrib::xlink__title},
+    {"xlink:show", Attrib::xlink__show},
+    {"xlink:actuate", Attrib::xlink__actuate}
 
 };
 

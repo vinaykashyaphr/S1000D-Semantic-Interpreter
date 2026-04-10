@@ -3,10 +3,32 @@
 # include <fstream>
 
 # include "interpreter.hpp"
-# include "definitions/models.hpp"
+# include "models/defs/content.hpp"
+# include "models/defs/dmodule.hpp"
+# include "models/factory.hpp"
 
 
 namespace fs = std::filesystem;
+
+
+struct MyContent : Content {
+    nlohmann::json to_json() const override {
+        nlohmann::json j = Content::to_json();  // get default structure
+
+        // modify
+        j["custom_id"] = id.value_or("none");
+
+        // delete
+        j.erase("id");
+
+        // add
+        j["source"] = "s1000d";
+
+        return j;
+    }
+};
+
+
 
 
 int main(int argc, char* argv[]) {
@@ -19,7 +41,10 @@ int main(int argc, char* argv[]) {
     fs::path input  = argv[1];
     std::ifstream in_file(input.string());
 
-    Interpreter interpreter(in_file);
+    ModelsFactory factory;
+    factory.override_with<Content, MyContent>();
+
+    Interpreter interpreter(in_file, &factory);
 
     Dmodule* dmodule = interpreter.get_model<Dmodule>(".");
 
@@ -33,4 +58,5 @@ int main(int argc, char* argv[]) {
     return 0;
 
 }
+
 

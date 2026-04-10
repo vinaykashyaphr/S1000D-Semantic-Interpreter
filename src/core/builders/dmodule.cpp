@@ -26,7 +26,7 @@ _Dmodule::_Dmodule(const pugi::xml_node& node, ModelsRegistry& registry, const s
 
 {
 
-    current_model = _registry.register_model(std::make_unique<Dmodule>(), _node);
+    current_model = _registry.register_model(_registry.factory().make<Dmodule>(), _node);
     build();
 
 }

@@ -1,4 +1,3 @@
-# include <memory>
 # include <string>
 
 # include "builders/content.hpp"
@@ -23,7 +22,7 @@ _Content::_Content(const pugi::xml_node& node, ModelsRegistry& registry, const s
     _registry(registry),
     _scheme(scheme)
 {
-    current_model = _registry.register_model(std::make_unique<Content>(), _node);
+    current_model = _registry.register_model(_registry.factory().make<Content>(), _node);
     build();
 }
 
@@ -66,7 +65,7 @@ void _Content::resolve() {
                 break;
 
             default:
-                std::runtime_error("Invalid attribute: " + std::string(attrib.name()) + " for " + std::string(_node.name()));
+                throw std::runtime_error("Invalid attribute: " + std::string(attrib.name()) + " for " + std::string(_node.name()));
                 break;
 
         }

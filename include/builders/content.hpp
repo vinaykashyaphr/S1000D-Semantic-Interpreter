@@ -5,8 +5,10 @@
 
 # include <pugixml.hpp>
 
-# include "definitions/models.hpp"
 # include "registries/models_registry.hpp"
+# include "models/defs/content.hpp"
+# include "models/defs/dmodule.hpp"
+
 
 
 

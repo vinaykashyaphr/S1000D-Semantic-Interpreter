@@ -7,14 +7,25 @@
 
 # include <pugixml.hpp>
 
-# include "definitions/models.hpp"
+# include "models/base.hpp"
+# include "models/factory.hpp"
 
 
 
 
 class ModelsRegistry {
 
+    std::vector<std::unique_ptr<BaseModel>> models;
+    std::unordered_map<void*, BaseModel*> node_map;
+    std::vector<std::function<void()>> _pending_links;
+
+    ModelsFactory* _factory;
+    ModelsFactory _default_factory;
+
     public:
+
+        ModelsFactory& factory();
+        explicit ModelsRegistry(ModelsFactory* factory = nullptr);
 
         template<typename Model>
         Model* register_model(std::unique_ptr<Model> model_ptr, const pugi::xml_node& node) {
@@ -53,15 +64,8 @@ class ModelsRegistry {
 
         }
 
-
         void defer_link(std::function<void()> fn);
         void resolve_links();
-
-
-    private:
-        std::vector<std::unique_ptr<BaseModel>> models;
-        std::unordered_map<void*, BaseModel*> node_map;
-        std::vector<std::function<void()>> _pending_links;
 
 };
 
